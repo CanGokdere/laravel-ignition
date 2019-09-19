@@ -1,0 +1,35 @@
+version: '3'
+services:
+  laravel_nginx:
+    container_name: laravel_nginx
+    restart: always
+    build:
+      context: ./
+      dockerfile: docker/images/nginx/Dockerfile
+    volumes:
+      - ./public:/var/www/public
+      - ./docker/images/nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - 80:80
+    depends_on:
+      - laravel_fpm
+  laravel_fpm:
+    container_name: laravel_fpm
+    build:
+      context: ./
+      dockerfile: docker/images/fpm/Dockerfile
+    volumes:
+      - ./:/var/www/
+    depends_on:
+      - laravel_db
+  laravel_db:
+    container_name: laravel_db
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/files/mysql_files:/var/lib/mysql:cached

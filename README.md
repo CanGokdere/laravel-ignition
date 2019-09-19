@@ -9,6 +9,7 @@ Included packages
 - league/flysystem-aws-s3-v3
 - league/flysystem-cached-adapter
 - predis/predis
-- tymon/jwt-auth
+- tymon/jwt-auth 
+- sentry/sentry-laravel
 
 ## Applying repository and services pattern 
